@@ -1,0 +1,50 @@
+{
+	"image": "mcr.microsoft.com/devcontainers/go:1-1.24-bookworm",
+	"name": "freeipa-operator-operator",
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                // Standardize editor configuration
+                "EditorConfig.EditorConfig",
+                // Markdown linting support
+                "davidanson.vscode-markdownlint",
+				// Support general GitHub features
+				"github.remotehub",
+				"github.vscode-github-actions",
+				"github.vscode-pull-request-github",
+                // Support golang text/templating for language editors that use it
+                "jinliming2.vscode-go-template",
+                // Support interacting with running devcontainers
+                "ms-azuretools.vscode-docker",
+                "ms-vscode-remote.remote-containers",
+                // Support YAML editing
+                "redhat.vscode-yaml"
+            ]
+        }
+    },
+	"features": {
+        "ghcr.io/devcontainers/features/docker-outside-of-docker:1": {
+			"enableNonRootDocker": "true",
+			"moby": "true",
+			"version": "latest"
+		},
+        "ghcr.io/devcontainers/features/kubectl-helm-minikube:1": {
+            "helm": "latest",
+            "minikube": "latest",
+            "version": "latest"
+        },
+        "ghcr.io/audacioustux/devcontainers/kustomize:1": {}
+	},
+
+	"mounts": [
+		// Support user kubectl configuration
+        "source=${localEnv:HOME}${localEnv:USERPROFILE}/.kube,target=/home/vscode/.kube,type=bind,consistency=cached",
+		// Support user SSH configuration
+        "source=${localEnv:HOME}${localEnv:USERPROFILE}/.ssh,target=/home/vscode/.ssh,type=bind,consistency=cached"
+	],
+
+	// Use this environment variable if you need to bind mount your local source code into a new container.
+	"remoteEnv": {
+		"LOCAL_WORKSPACE_FOLDER": "${localWorkspaceFolder}"
+	}
+}
